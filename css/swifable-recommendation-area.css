@@ -1,0 +1,91 @@
+.swifable-recommendation-area
+{
+    height: 400px;
+    width: 100%;
+    background-color: #91AA9D;
+}
+
+#left-arrow-area
+{
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 19%;
+}
+
+#right-arrow-area
+{
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 19%;
+}
+
+#left-arrow-area #left-arrow
+{
+    position: absolute;
+    height: 100px;
+    width: auto;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+}
+
+#right-arrow-area #right-arrow
+{
+    position: absolute;
+    height: 100px;
+    width: auto;
+    top:50%;
+    right: 50%;
+    margin-top: -50px;
+}
+
+#left-arrow-area #left-arrow:hover
+{
+    cursor: pointer;
+}
+
+#right-arrow-area #right-arrow:hover
+{
+    cursor: pointer;
+}
+
+#recommendation-area
+{
+    position: relative;
+    display: inline-block;
+    top: 0px;
+    height: 100%;
+    width: 60%;
+    text-align: center;
+    vertical-align: top;
+}
+
+#recommendation-area .swifable-node
+{
+    position: absolute;
+    top: 0px; 
+    height: 100%;
+    width: 100%;
+    font-family: Verdana;
+    vertical-align: middle;
+}
+
+.recommendation-writer
+{
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.recommendation-content
+{
+    width: 100%;
+}
+
+.recommendation-star
+{
+    width: 100%;
+}
+
