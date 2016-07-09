@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
+<head>
+        <meta charset="utf-8">
 
         <title></title>
 
         <link rel="stylesheet" type="text/css" href="css/index.css" media="screen">
         <script src="js/jquery-3.0.0.min.js"></script>
+        <script src="js/jquery.mousewheel.min.js"></script>
+
+        <script>
+        $(function() {
+
+           $("#list-history").mousewheel(function(event, delta) {
+
+              this.scrollLeft -= (delta * 30);
+              event.preventDefault();
+
+           });
+           $("#list-search").mousewheel(function(event, delta) {
+
+              this.scrollTop -= (delta * 30);
+              event.preventDefault();
+
+           });
+        });
+        </script>
     </head>
 
     <body>
@@ -28,13 +47,23 @@
                                 <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
    
                             </li>
+                            <li class="list-item">
+                                <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+   
+                            </li>
+                            <li class="list-item">
+                                <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+   
+                            </li>
                         </ul>
                     </section>
                 </section>
                 <section id="area-search">
                     <section id="area-search-inner">
-                    <input id="text-search" type="text">
-
+                    <section id="area-text-search">
+                        <input id="text-search" type="text">
+                        <img id="text-search-button" src="img/mag-glass.png">
+                    </section>
                     <ul class="list-deco" id="list-search">
                         <li class="list-item">
                             <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
@@ -42,7 +71,18 @@
                             <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
                             <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
                         </li>
+                        <li class="list-item">
+                            <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
 
+                            <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+                            <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
+                        </li>
+                        <li class="list-item">
+                            <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
+
+                            <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+                            <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
+                        </li>
                     </ul>
                     </section>
                 </section>
@@ -51,6 +91,8 @@
         </article><!--outer-container-->
         <footer></footer>
 
-    </body>
+    
 
-</html>
+
+</body></html>
+

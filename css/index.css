@@ -1,3 +1,7 @@
+body
+{
+    background-color: #E0DFE1;
+}
 h4, h5
 {
     margin-top: 5px;
@@ -18,86 +22,147 @@ h4, h5
 #area-cascade
 {
     height: 100%;
-    width: 65%;
+    width: 64%;
     float:left;
 }
+
+/*************** main areas ***************/
 #area-cascade #area-video
 {
-    background-color: red;
+    background-color: #AAAAAA;
     height: 70%;
     width:100%;
 }
 
 #area-cascade #area-history
 {
-    background-color: blue;
-    height: 30%;
+    margin-top: 8px;
+    background-color: #AAAAAA;
+    height: 29%;
     width: 100%;
-}
-
-#list-history li
-{
-    display: inline;
 }
 
 #area-search
 {
-    background-color: green;
+    margin-left: 8px; 
+    background-color: #AAAAAA;
     height: 100%;
     width: 35%;
     float: left;
 }
-
+/*****************************************/
 #area-search #area-search-inner
 {
+    height: 100%;
     width: 60%;
     margin-left: 20%;
 }
-
-#text-search
+#area-text-search
 {
-    width: 88%;
-    margin-top:30px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+#area-text-search #text-search
+{
+    background-color: #575A5E;
+    color: white;
+    width: 75%;
+    font-size: 10pt;
+    border-radius: 25px;
+    border: 0;
     padding-left: 5%;
     padding-right: 5%;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
+#text-search-button
+{
+    float: right;
+    padding-top: 3px;
+    width: 10%;
+}
+
+#text-serach-button:hover
+{
+    opacity: 0.8;
+}
+
+#text-search:focus
+{
+    outline: none;
+}
+
+#list-history li
+{
+    display: inline;
+    margin-right: 20px;
+}
+
+#list-history li img
+{
+    border-radius: 5px;
+}
+
+#list-search li
+{
+    background-color: #808281;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    height: auto;
+    width: 100%;
+}
 .hyp-deco
 {
     text-decoration: none;
+    color: white;
 }
 
 .list-deco
 {
     list-style-type: none;
+    white-space:nowrap;
     margin: 0 auto;
     padding: 0;
 }
 #list-search
 {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: 5%;
+    height: 80%;
     width: 100%;
 }
 #list-history
 {
-    height: 100%;
-    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 80%;
+    width: 95%;
+    padding-top: 2.5%;
+    margin-left: 2.5%;
 }
-#list-search .list-item
+
+#list-search #list-item-title
 {
-    height: 200px;
-    width: 100%;
+    margin-left: 5px;
+    padding-top: 5px;
+}
+
+#list-search #list-item-expl
+{
+    margin-left: 5px;
+    padding-top: 5px;
 }
 
 .list-item-image
 {
-    overflow: hiden;
 }
 
 .list-item-image:hover
 {
-
+    opacity: 0.8;
 }
 
 #list-search .list-item .list-item-image 
@@ -108,6 +173,7 @@ h4, h5
 
 #list-history .list-item .list-item-image
 {
-    height: 80%;
+    height: 100%;
     width: 30%;
 }
+
