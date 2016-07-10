@@ -97,7 +97,6 @@ h4, h5
 #list-history li
 {
     display: inline;
-    margin-right: 20px;
 }
 
 #list-history li img
@@ -155,15 +154,11 @@ h4, h5
     margin-left: 5px;
     padding-top: 5px;
 }
-
-.list-item-image
-{
-}
-
 .list-item-image:hover
 {
     opacity: 0.8;
 }
+
 
 #list-search .list-item .list-item-image 
 {
@@ -171,9 +166,24 @@ h4, h5
     width: 100%;
 }
 
-#list-history .list-item .list-item-image
+#list-history .list-image-area
 {
+    position: relative;
     height: 100%;
     width: 30%;
 }
 
+#list-history .list-item .list-item-image
+{
+    height: 100%;
+    width: 100%;;
+}
+
+.list-item-remove
+{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: none;
+    
+}

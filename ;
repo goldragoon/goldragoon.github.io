@@ -25,22 +25,10 @@
 
            });
 
-           $(".list-image-area").hover(
-               function(){
-                   $(".list-item-remove").fadeTo("fast", 1.0, function(){
-                   });
-               },
-               function(){
-                   $(".list-item-remove").fadeTo("fast", 0.0, function(){
-                   });
-                    
-               }
-               );
-
-           $(".list-item-remove").click(function(){
-               $(this.id+'').remove();
-               console.log(this.id+"");
-           });
+           $(".list-item-image").hover(function(event){
+               $(".list-item-remove").opacity = 0.0;
+               console.log("image hover");
+            });
         });
         </script>
     </head>
@@ -56,10 +44,10 @@
 
                     <section id="area-history">
                         <ul class="list-deco" id="list-history">
-                            <li id="item1" class="list-item">
+                            <li class="list-item">
                                 <section class="list-image-area">
                                     <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
-                                    <button id="item1" class="list-item-remove">x</button>
+                                    <button class="list-item-remove">x</button>
                                 <section>
                             </li>
                         </ul>
