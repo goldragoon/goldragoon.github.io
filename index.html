@@ -4,7 +4,7 @@
         <meta charset="utf-8">
 
         <title></title>
-
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/index.css" media="screen">
         <script src="js/jquery-3.0.0.min.js"></script>
         <script src="js/jquery.mousewheel.min.js"></script>
@@ -39,58 +39,186 @@
 
            $(".list-item-remove").click(function(){
                $(this.id+'').remove();
-               console.log(this.id+"");
+               
+           });
+
+           $(".list-item-search-product").click(function(){
+                $("#product-order").show();
+           });
+
+           $("#product-close").click(function(){
+
+               $("#product-order").hide();
            });
         });
         </script>
     </head>
 
     <body>
-        <header></header>
+        <header>
+            <section id="area-search-top">
+
+                <a id="head-text">샾샷샵</a>
+                <section id="area-form">
+                    <input id="search-text" type="text">
+                    <button id="search-button">검색</button></input>
+                </section>
+
+                <section id="user-menus">
+                    <section id="search-option">
+                        <a id="search-option-button" href="#">상세검색</a>
+                        <section id="search-option-contents">
+                            <a href="#">제목</a>
+                            <a href="#">제목 + 내용</a>
+                        </section>
+                    </section>
+                    <a id ="login" class="top-hyp-deco" href="#">로그인</a>
+                    <a id ="register" class="top-hyp-deco" href="#">회원가입</a>
+                    <a id ="password-find" class="top-hyp-deco" href="#">비밀번호 찾기</a>
+                </section>
+            </section>
+            <section id="area-nav-top">
+                <ul id="top-menu">
+                    <li class="menu-selected">현재방영드라마</li>
+                    <li>종영드라마</li>
+                    <li>예능</li>
+                    <li>뮤직비디오</li>
+                    <li>광고</li>
+                    <li>영화</li>
+                </ul>
+            </section>
+        </header>
 
         <article id="outer-container">
             <article id="inner-container">
+                <section id="area-video-head">
+                    <a id="video-title">태양의 후예 14화</a>
+                    <h4 class="info-head"> SBS 수,목 오후</h4> <h4 id="video-date">10:00~11:00</h4>
+                    <h4 class="info-head">재생횟수</h4> <h4 id="video-play-count">23123회</h4>
+                    <h4 class="info-head">상품검색</h4> <h4 id="video-product-count">123회</h4>
+
+                </section>
                 <section id="area-cascade">
+
                     <section id="area-video">
                     </section>
 
                     <section id="area-history">
+                        <section id="area-history-head">
+                            <img src="img/screenshot.png">
+                            <h4 id="screen-save">스크린샷 저장</h4>
+                            <h4 id="screen-count">스크린샷 갯수 2개</h4>
+                        </section>
+
                         <ul class="list-deco" id="list-history">
                             <li id="item1" class="list-item">
                                 <section class="list-image-area">
                                     <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
                                     <button id="item1" class="list-item-remove">x</button>
+                                    <section class="image-info">
+                                        <h4 class="image-date">2016.06.10</h4>
+                                        <h4 class="image-time">23:10</h4>
+    
+                                    </section>
+                                <section>
+                                </li>
+                            <li id="item2" class="list-item">
+                                <section class="list-image-area">
+                                    <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+                                    <button id="item1" class="list-item-remove">x</button>
+                                    <section class="image-info">
+                                        <h4 class="image-date">2016.06.10</h4>
+                                        <h4 class="image-time">23:10</h4>
+    
+                                    </section>
                                 <section>
                             </li>
                         </ul>
                     </section>
                 </section>
                 <section id="area-search">
-                    <section id="area-search-inner">
+
                     <section id="area-text-search">
+                        <section id="area-text-search-inner">
                         <input id="text-search" type="text">
-                        <img id="text-search-button" src="img/mag-glass.png">
+                        <img id="text-search-button" src="img/text-search-button.png">
                     </section>
-                    <ul class="list-deco" id="list-search">
-                        <li class="list-item">
-                            <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
 
-                            <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
-                            <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
-                        </li>
-                        <li class="list-item">
-                            <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
+                    <section id="area-display-result">
+                        <section id="area-result-head">
+                            <h4>'괜찮아 사랑이야' 14화 검색 랭킹</h4>
+                        </section>
 
-                            <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
-                            <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
-                        </li>
-                        <li class="list-item">
-                            <h4 id="list-item-title"><a class="hyp-deco" href="#">What does it means?</a></h4>
+                        <section id="product-order">
+                            <section id="product-order-inner">
+                                <h4 class="query-name">#공효진 블라우스</h4>
+                                <img class="product-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+                                <h4 class="product-name">[세에라자드]SONY[소니]헤드폰 h.ear 소니 무선 헤드폰 초특가 판매</h4>
+                                <section>
+                                    <h4 class="cost-head">소비자가</h4>
+                                    <section class="money-part">
+                                        <h4 class="letter-big-gray">499,000</h4><h4 class="stnd">원</h4>
+                                    </section>
+                                </section>
+                                <br>
+                                <section>
+                                    <h4 class="cost-head">할인가</h4>
+                                    <section class="money-part">
+                                        <h4 class="letter-big-orange">399,000</h4><h4 class="stnd">원</h4>
+                                    </section>
+                                </section>
+                                <section>
+                                    <h4 class="cost-head">쿠폰가</h4>
+                                    <section class="money-part">
+                                        <h4 class="letter-big-orange">399,000</h4><h4 class="stnd">원</h4>
+                                    </section>
+                                </section>
 
-                            <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
-                            <h5 id="list-item-expl"><a class="hyp-deco" href="#">Veritas lux mea</a></h5>
-                        </li>
-                    </ul>
+                                <button id="product-cart">장바구니</button>
+                                <button id="product-ordering">주문하기</button>
+                                <button id="product-close"></button>
+                            </section>
+                        </section>
+                        <ul class="list-deco" id="list-search">
+                            <li class="list-item-ranking">
+                                <section class="list-item-inner">
+                                    <section class="area-list-item-index">
+                                        <h4 class="list-item-index">1</h4>
+                                    </section>
+                                    <section class="area-list-item-info">
+
+                                        <h4 class="list-item-title"><a class="hyp-deco" href="#">#공효진 블라우스</a></h4>
+                                        <h4 class="list-item-time">12:20 ~ 13:34</h4>
+
+                                        <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+                                        <section class="list-item-expl"><a class="hyp-deco" href="#">[세에라자드]SONY[소니]헤드폰 h.ear 소니 무선 헤드폰 초특가 판매</a></section>
+                                    </section>
+                                </section>
+ 
+                            </li>
+                            <li class="list-item-search-product">
+                                <section class="list-item-inner">
+
+                                    <section class="area-list-item-info">
+
+                                        <h4 class="list-item-title"><a class="hyp-deco" href="#">#공효진 블라우스</a></h4>
+                                        
+                                        <img class="list-item-image" src="http://img2.sbs.co.kr/img/sbs_cms/VD/2013/12/13/VD33094872_w700.jpg">
+
+                                        <section class="info-inner">
+
+                                            <section class="list-item-expl"><a class="hyp-deco" href="#">[세에라자드]SONY[소니]헤드폰 h.ear 소니 무선 헤드폰 초특가 판매</a></section>
+
+                                            
+                                            <h4 class="list-item-cost">399.000</h4>
+                                            <h4 class="list-item-seller">SmartAudio</h4>
+
+                                        </section>
+                                    </section>
+                                </section>
+ 
+                            </li>
+                        </ul>
                     </section>
                 </section>
 
