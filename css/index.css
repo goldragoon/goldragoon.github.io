@@ -232,6 +232,12 @@ a{
 
 /*************** main areas ***************/
 
+#area-video
+{
+    position: relative;
+       
+}
+
 #area-video-head
 {
     margin-bottom: 10px;

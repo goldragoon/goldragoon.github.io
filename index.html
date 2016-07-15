@@ -4,11 +4,15 @@
         <meta charset="utf-8">
 
         <title></title>
+        
+        <link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css"/>
+<!--
+        <link rel="stylesheet" href="css/video.css">-->
         <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/index.css" media="screen">
         <script src="js/jquery-3.0.0.min.js"></script>
         <script src="js/jquery.mousewheel.min.js"></script>
-
+        <script src='http://odyniec.net/projects/imgareaselect/jquery.imgareaselect.pack.js'></script>
         <script>
         $(function() {
 
@@ -51,7 +55,658 @@
                $("#product-order").hide();
            });
         });
-        </script>
+    </script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+
+
+        //INITIALIZE
+        var video = $('#myvideo');
+
+    
+        //remove default control when JS loaded
+        video[0].removeAttribute("controls");
+
+        $('.control').fadeIn(500);
+
+        $('.caption').fadeIn(500);
+
+ 
+
+        //before everything get started
+
+        video.on('loadedmetadata', function() {
+
+                        
+
+                //set video properties
+
+                $('.current').text(timeFormat(0));
+
+                $('.duration').text(timeFormat(video[0].duration));
+
+                updateVolume(0, 0.7);
+
+                        
+
+                //start to get video buffering data 
+
+                setTimeout(startBuffer, 150);
+
+                        
+
+                //bind video events
+
+                $('.videoContainer')
+
+                .hover(function() {
+
+                        $('.control').stop().fadeIn();
+
+                        $('.caption').stop().fadeIn();
+
+                }, function() {
+
+                        if(!volumeDrag && !timeDrag){
+
+                                $('.control').stop().fadeOut();
+
+                                $('.caption').stop().fadeOut();
+
+                        }
+
+                })
+
+                .on('click', function() {
+
+                        $('.btnPlay').find('.icon-play').addClass('icon-pause').removeClass('icon-play');
+
+                        $(this).unbind('click');
+
+                        video[0].play();
+
+                });
+
+        });
+
+        
+
+        //display video buffering bar
+
+        var startBuffer = function() {
+
+                var currentBuffer = video[0].buffered.end(0);
+
+                var maxduration = video[0].duration;
+
+                var perc = 100 * currentBuffer / maxduration;
+
+                $('.bufferBar').css('width',perc+'%');
+
+                        
+
+                if(currentBuffer < maxduration) {
+
+                        setTimeout(startBuffer, 500);
+
+                }
+
+        };      
+
+        
+
+        //display current video play time
+
+        video.on('timeupdate', function() {
+
+                var currentPos = video[0].currentTime;
+
+                var maxduration = video[0].duration;
+
+                var perc = 100 * currentPos / maxduration;
+
+                $('.timeBar').css('width',perc+'%');    
+
+                $('.current').text(timeFormat(currentPos));     
+
+        });
+
+        
+
+        //CONTROLS EVENTS
+
+        //video screen and play button clicked
+
+        video.on('click', function() { playpause(); } );
+
+        $('.btnPlay').on('click', function() { playpause(); } );
+
+        var playpause = function() {
+
+                if(video[0].paused || video[0].ended) {
+
+                        $('.btnPlay').addClass('paused');
+
+                        $('.btnPlay').find('.icon-play').addClass('icon-pause').removeClass('icon-play');
+
+                        video[0].play();
+
+                }
+
+                else {
+
+                        $('.btnPlay').removeClass('paused');
+
+                        $('.btnPlay').find('.icon-pause').removeClass('icon-pause').addClass('icon-play');
+
+                        video[0].pause();
+
+                }
+
+        };
+
+
+
+        
+
+        //fullscreen button clicked
+
+        $('.btnFS').on('click', function() {
+
+                if($.isFunction(video[0].webkitEnterFullscreen)) {
+
+                        video[0].webkitEnterFullscreen();
+
+                }       
+
+                else if ($.isFunction(video[0].mozRequestFullScreen)) {
+
+                        video[0].mozRequestFullScreen();
+
+                }
+
+                else {
+
+                        alert('Your browsers doesn\'t support fullscreen');
+
+                }
+
+        });
+
+        //widescreen button clicked
+
+        $('.btnWS').on('click', function() {
+
+        });
+
+        
+
+        //sound button clicked
+
+        $('.sound').click(function() {
+
+                video[0].muted = !video[0].muted;
+
+                $(this).toggleClass('muted');
+
+                if(video[0].muted) {
+
+                        $('.volumeBar').css('width',0);
+
+                }
+
+                else{
+
+                        $('.volumeBar').css('width', video[0].volume*100+'%');
+
+                }
+
+        });
+
+        
+
+        //VIDEO EVENTS
+
+        //video canplay event
+
+        video.on('canplay', function() {
+
+                $('.loading').fadeOut(100);
+
+        });
+
+        
+
+        //video canplaythrough event
+
+        //solve Chrome cache issue
+
+        var completeloaded = false;
+
+        video.on('canplaythrough', function() {
+
+                completeloaded = true;
+
+        });
+
+        
+
+        //video ended event
+
+        video.on('ended', function() {
+
+                $('.btnPlay').removeClass('paused');
+
+                video[0].pause();
+
+        });
+
+
+
+        //video seeking event
+
+        video.on('seeking', function() {
+
+                //if video fully loaded, ignore loading screen
+
+                if(!completeloaded) { 
+
+                        $('.loading').fadeIn(200);
+
+                }       
+
+        });
+
+        
+
+        //video seeked event
+
+        video.on('seeked', function() { });
+
+        
+
+        //video waiting for more data event
+
+        video.on('waiting', function() {
+
+                $('.loading').fadeIn(200);
+
+        });
+
+        
+
+        //VIDEO PROGRESS BAR
+
+        //when video timebar clicked
+
+        var timeDrag = false;   /* check for drag event */
+
+        $('.progress').on('mousedown', function(e) {
+
+                timeDrag = true;
+
+                updatebar(e.pageX);
+
+        });
+
+        $(document).on('mouseup', function(e) {
+
+                if(timeDrag) {
+
+                        timeDrag = false;
+
+                        updatebar(e.pageX);
+
+                }
+
+        });
+
+        $(document).on('mousemove', function(e) {
+
+                if(timeDrag) {
+
+                        updatebar(e.pageX);
+
+                }
+
+        });
+
+        var updatebar = function(x) {
+
+                var progress = $('.progress');
+
+                
+
+                //calculate drag position
+
+                //and update video currenttime
+
+                //as well as progress bar
+
+                var maxduration = video[0].duration;
+
+                var position = x - progress.offset().left;
+
+                var percentage = 100 * position / progress.width();
+
+                if(percentage > 100) {
+
+                        percentage = 100;
+
+                }
+
+                if(percentage < 0) {
+
+                        percentage = 0;
+
+                }
+
+                $('.timeBar').css('width',percentage+'%');      
+
+                video[0].currentTime = maxduration * percentage / 100;
+
+        };
+
+
+
+        //VOLUME BAR
+
+        //volume bar event
+
+        var volumeDrag = false;
+
+        $('.volume').on('mousedown', function(e) {
+
+                volumeDrag = true;
+
+                video[0].muted = false;
+
+                $('.sound').removeClass('muted');
+
+                updateVolume(e.pageX);
+
+        });
+
+        $(document).on('mouseup', function(e) {
+
+                if(volumeDrag) {
+
+                        volumeDrag = false;
+
+                        updateVolume(e.pageX);
+
+                }
+
+        });
+
+        $(document).on('mousemove', function(e) {
+
+                if(volumeDrag) {
+
+                        updateVolume(e.pageX);
+
+                }
+
+        });
+
+        var updateVolume = function(x, vol) {
+
+                var volume = $('.volume');
+
+                var percentage;
+                //if only volume have specificed
+                //then direct update volume
+
+                if(vol) {
+
+                        percentage = vol * 100;
+
+                }
+
+                else {
+
+                        var position = x - volume.offset().left;
+
+                        percentage = 100 * position / volume.width();
+
+                }
+
+                
+
+                if(percentage > 100) {
+
+                        percentage = 100;
+
+                }
+
+                if(percentage < 0) {
+
+                        percentage = 0;
+
+                }
+
+                
+
+                //update volume bar and video volume
+
+                $('.volumeBar').css('width',percentage+'%');    
+
+                video[0].volume = percentage / 100;
+
+                
+
+                //change sound icon based on volume
+
+                if(video[0].volume == 0){
+
+                        $('.sound').removeClass('sound2').addClass('muted');
+
+                }
+
+                else if(video[0].volume > 0.5){
+
+                        $('.sound').removeClass('muted').addClass('sound2');
+
+                }
+
+                else{
+
+                        $('.sound').removeClass('muted').removeClass('sound2');
+
+                }
+
+                
+
+        };
+
+        //Time format converter - 00:00
+        var timeFormat = function(seconds){
+                var m = Math.floor(seconds/60)<10 ? "0"+Math.floor(seconds/60) : Math.floor(seconds/60);
+                var s = Math.floor(seconds-(m*60))<10 ? "0"+Math.floor(seconds-(m*60)) : Math.floor(seconds-(m*60));
+
+                return m+":"+s;
+
+        };
+
+        function preview(img, selection) {
+
+                var scaleX = 100 / (selection.width || 1);
+
+                var scaleY = 100 / (selection.height || 1);
+
+          
+
+                $('#ferret + div > img').css({
+
+                        width: Math.round(scaleX * 400) + 'px',
+
+                        height: Math.round(scaleY * 300) + 'px',
+
+                        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+
+                        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+
+                });
+
+        }
+
+        $('#myImage').imgAreaSelect({
+
+                handles: true,
+
+                onSelectEnd: function (img, selection) {if (!selection.width || !selection.height) {return;}
+                        $('#x1').val(selection.x1);
+                        $('#y1').val(selection.y1);
+                        $('#x2').val(selection.x2);
+                        $('#y2').val(selection.y2);
+                        $('#w').val(selection.width);
+                        $('#h').val(selection.height);
+                        $('#myImageSave').show();
+
+                        var pos = $("#area-video").position();
+                        console.log(selection.x2 + pos.left);
+                        console.log(selection.y2 + pos.top);
+                }
+        });
+
+        var v=document.getElementById("myvideo");
+        $(".videoCapture").click(function(event) {
+            console.log("videocapture");
+            var c = document.getElementById("mycanvas");
+            v.pause();
+            $("#mycanvas").show();
+            var ctx = c.getContext("2d");
+            ctx.drawImage(v,1,1);
+            var myImage = document.getElementById('myImage');
+//            myImage.src =c.toDataURL();
+            $("#myImage").show();
+            $("#myImaveSave").show();
+            $(".videoCapture").hide(); 
+        });
+
+        $("#myImageSave").click(function(event){
+            $("#mycanvas").hide();
+            $("#myImage").imgAreaSelect({hide:true});
+            $("#myImage").hide();
+            $("#myImageSave").hide();
+            $(".videoCapture").show();
+            var ias = $('#myImage').imgAreaSelect({ instance: true }).getSelection();
+            var d = new Date();
+
+var image = new Image(),
+    canvas = document.getElementById('mycanvas'),
+    ctx = canvas.getContext('2d');
+
+image.src = 'https://www.google.nl/images/srpr/logo3w.png';
+image.crossOrigin='anonymous';
+image.onload = function(){
+    ctx.drawImage(image,
+        70, 20,   // Start at 70/20 pixels from the left and the top of the image (crop),
+        50, 50,   // "Get" a `50 * 50` (w * h) area from the source image (crop),
+        0, 0,     // Place the result at 0, 0 in the canvas,
+        100, 100); // With as width / height: 100 * 100 (scale)
+
+}/*
+        var crop_canvas;        
+        crop_canvas = document.createElement('canvas');
+        crop_canvas.width = ias.width;
+        crop_canvas.height = ias.height;
+        document.getElmentById("mycanvas").setAttribute('crossOrigin', 'anonymous');
+        
+        var imageData = document.getElementById("mycanvas").getContext('2d').getImageData(ias.x1, ias.y1, ias.x2, ias.y2);
+        
+        crop_canvas.getContext('2d').drawImage(imageData, ias.x1, ias.y1, ias.width, ias.height, 0, 0, ias.width, ias.height);
+   */     
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+
+            var output = d.getFullYear() + '.' +
+                (month<10 ? '0' : '') + month + '.' +
+                (day<10 ? '0' : '') + day;
+            $("#list-history").append(
+                $("<li>").append(
+                    $("<section>")
+                    .append($("<img>").attr("class", "list-item-image").attr("src", canvas.toDataURL("image/png")))
+                    .append($("<button>").attr("class", "list-item-remove"))
+                    .append(
+                        $("<section>")
+                        .append($("<h4>").attr("class", "image-date").html(output))
+                        .append($("<h4>").attr("class", "image-time")).attr("class","image-info")
+                        ).attr("class", "list-image-area")
+                    
+                    ).attr("id", "list-item")
+            );
+        });
+});
+</script>
+        <style>
+
+            #mycanvas
+            {
+                height: 100%;
+                width: 100%;
+                position:absolute;
+                top: 0px;
+                left:0px;
+            }
+
+            #myvideo
+            {
+                height: 560px;
+                width: 100%;
+            }
+
+            .videoCapture
+            {
+                z-index: 998;
+                border: 0;
+                outline: none;
+                cursor: pointer;
+                background-image: url("img/screenshot.png");
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                height: 50px;
+                width: 50px;
+
+            }
+
+            #myImage{
+                display: none;
+                height: 100%;
+                width: 100%;
+                position:absolute;
+                top:0px;
+                left:0px;
+            }
+
+            #myImageSave
+            {
+                z-index:998;
+                display: none;
+                border: none;
+                outline : none;
+                font-family: NotoSansCJKkr-Regular;
+                font-size: 20px;
+                font-weight: 700;
+                color: #FFFFFF;
+                background-color: #FC5427;
+                position: absolute;
+                right: 20px;
+                bottom: 20px;
+                width: 300px;
+                height: 45px;            
+            }
+
+
+            #ladybug_ant{
+                position:absolute;
+                margin-left:800px;
+            }
+        </style>        
     </head>
 
     <body>
@@ -101,15 +756,56 @@
                 <section id="area-cascade">
 
                     <section id="area-video">
-                    </section>
 
+    <section id="wrapper">
+        <span class="videoCapture"></span>
+        <div class="videoContainer">
+        <video id="myvideo" controls>
+            <source src='1.mp4'>
+            Your browser doesn't support HTML5 video. Try a different browser instead.
+        </video>
+
+        <div class="control">
+            <div class="btmControl">
+                <div class="progress-bar">
+                    <div class="progress">
+                            <span class="bufferBar"></span>
+                            <span class="timeBar"></span>
+                    </div>
+                </div>
+                <div class="btnPlay btn" title="Play/Pause video">
+                        <span class="icon-play"></span>
+                </div>
+                <div class="sound sound2 btn" title="Mute/Unmute sound"><span class="icon-sound"></span></div>
+
+                <div class="btnWS btn" title="Switch to wide screen">
+
+                        <span class="icon-480"></span>
+
+                        <span class="icon-widescreen"></span>
+
+                </div>
+
+                <div class="btnFS btn" title="Switch to full screen">
+
+                        <span class="icon-fullscreen"></span>
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+    <button id="myImageSave">CAPTURE</button>
+    </section>
+    <canvas style="display:none;" id="mycanvas" crossOrigin="Anonymous">Sorry, no canvas available</canvas>
+    <img  style="display:none;" id="myImage" crossOrigin="Anonymous">
+                    </section>
                     <section id="area-history">
                         <section id="area-history-head">
                             <img src="img/screenshot.png">
                             <h4 id="screen-save">스크린샷 저장</h4>
                             <h4 id="screen-count">스크린샷 갯수 2개</h4>
                         </section>
-
                         <ul class="list-deco" id="list-history">
                             <li id="item1" class="list-item">
                                 <section class="list-image-area">
@@ -141,7 +837,7 @@
                     <section id="area-text-search">
                         <section id="area-text-search-inner">
                         <input id="text-search" type="text">
-                        <img id="text-search-button" src="img/text-search-button.png">
+                        <img oid="text-search-button" src="img/text-search-button.png">
                     </section>
 
                     <section id="area-display-result">
@@ -276,7 +972,7 @@
                     </section>
                 </section>
 
-            </article><!--inner-container-->
+            </article><!--iinner-container-->
         </article><!--outer-container-->
         <footer></footer>
 
